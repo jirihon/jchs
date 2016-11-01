@@ -11,34 +11,34 @@ import re
 import glob
 
 songs = [
-    # {'dir': '01_Predehra', 'slug': '01', 'title': 'Předehra'},
+    {'dir': '01_Predehra', 'slug': '01', 'title': 'Předehra'},
     {'dir': '02_Jak_ze_sna_procitam', 'slug': '02', 'title': 'Jak ze sna procitám'},
-    # {'dir': '03a_Proc_ten_shon', 'slug': '03a', 'title': 'Proč ten shon'},
-    # {'dir': '03b_Divna_mystifikace', 'slug': '03b', 'title': 'Divná mystifikace'},
-    # {'dir': '04_Vse_je_tak_jak_ma_byt', 'slug': '04', 'title': 'Vše je tak, jak má být'},
-    # {'dir': '05_Zemrit_by_mel', 'slug': '05', 'title': 'Zemřít by měl'},
-    # {'dir': '06_Hosanna', 'slug': '06', 'title': 'Hosanna'},
-    # {'dir': '07_Simon_Zelotes_Ubohy_Jeruzalem', 'slug': '07', 'title': 'Šimon Zélotes - Ubohý Jeruzalém'},
-    # {'dir': '08_Pilatuv_sen', 'slug': '08', 'title': 'Pilátův sen'},
-    # {'dir': '09_V_chramu', 'slug': '09', 'title': 'V chrámu'},
-    # {'dir': '10_Vse_je_tak_jak_ma_byt_II_Co_na_tom_je_tak_zleho', 'slug': '10', 'title': 'Vše je tak, jak má být II - Co na tom je tak zlého'},
-    # {'dir': '11_Zavrzen_na_veky_vekuv_Penize_zkropene_krvi', 'slug': '11', 'title': 'Zavržen na věky věkův - Peníze zkropené krví'}
+    {'dir': '03a_Proc_ten_shon', 'slug': '03a', 'title': 'Proč ten shon'},
+    {'dir': '03b_Divna_mystifikace', 'slug': '03b', 'title': 'Divná mystifikace'},
+    {'dir': '04_Vse_je_tak_jak_ma_byt', 'slug': '04', 'title': 'Vše je tak, jak má být'},
+    {'dir': '05_Zemrit_by_mel', 'slug': '05', 'title': 'Zemřít by měl'},
+    {'dir': '06_Hosanna', 'slug': '06', 'title': 'Hosanna'},
+    {'dir': '07_Simon_Zelotes_Ubohy_Jeruzalem', 'slug': '07', 'title': 'Šimon Zélotes - Ubohý Jeruzalém'},
+    {'dir': '08_Pilatuv_sen', 'slug': '08', 'title': 'Pilátův sen'},
+    {'dir': '09_V_chramu', 'slug': '09', 'title': 'V chrámu'},
+    {'dir': '10_Vse_je_tak_jak_ma_byt_II_Co_na_tom_je_tak_zleho', 'slug': '10', 'title': 'Vše je tak, jak má být II - Co na tom je tak zlého'},
+    {'dir': '11_Zavrzen_na_veky_vekuv_Penize_zkropene_krvi', 'slug': '11', 'title': 'Zavržen na věky věkův - Peníze zkropené krví'}
 ]
 instruments = [
-    # {'slug': 'Tbn', 'regex': re.compile('(T|\'I\')(rombone|[bh][nu])')},
-    # {'slug': 'Flt', 'regex': re.compile('(Flute|F[l1LI\]\[\}\{])')},
-    # {'slug': 'Clr', 'regex': re.compile('.*(Clarinet|C[l1LI\]\[\}\{]|Bassoon|Bsn|Tenor|Sx)')},
-    # {'slug': 'Tpt', 'regex': re.compile('.*(Trumpet|Tp[tlL]|[B8].* m.)')},
-    {'slug': 'Bsn', 'regex': re.compile('(Bassoon|Bsn)')},
-    # {'slug': 'KbdStr', 'regex': re.compile('.*(Voice|Choir|Keyboard|K[bh]d)'), 'top': -200, 'bottom_end': -100,
-    #  'exclude': {'regex': re.compile('(.*(Guitar|G[tlL]r|Dr)|^Bass$)'), 'top': -80, 'bottom': +80}}
+    {'slug': 'Tbn', 'regex': re.compile('(T|\'I\')(rombone|[bh][nu])')},
+    {'slug': 'Flt', 'regex': re.compile('(Flute|F[l1LI\]\[\}\{])')},
+    {'slug': 'Clr', 'regex': re.compile('.*(Clarinet|C[l1LI\]\[\}\{]|Bassoon|Bsn|8311|Tenor|Sx)')},
+    {'slug': 'Tpt', 'regex': re.compile('.*(Trumpet|Tp[tlL]|[B8].* m.)')},
+    # {'slug': 'Bsn', 'regex': re.compile('(Bassoon|Bsn)')},
+    {'slug': 'KbdStr', 'regex': re.compile('.*(Voice|Choir|Keyboard|K[bh]d)'), 'top': -200, 'bottom_end': -100,
+     'exclude': {'regex': re.compile('(.*(Guitar|G[tlL]r|Dr)|^Bass$)'), 'top': -80, 'bottom': +80}}
 ]
 score_x_shift = -30
 label_x_offset = -150
 first_label_extra_x_offset = -100
 label_first_width = 270
 label_other_width = 170
-page_height_limit = 2580#2590
+page_height_limit = 2580  # 2590
 score_width = 4250
 top_y_offset = -120
 bottom_y_offset = +100
@@ -47,7 +47,7 @@ page_fill_threshold = 200
 
 tex_header = '''
 \\documentclass[]{article}
-\\usepackage[a4paper,landscape,top=2cm,bottom=1cm,left=0.9cm,right=0.8cm]{geometry}
+\\usepackage[a4paper,landscape,top=2cm,bottom=1cm,left=0.5cm,right=0.8cm]{geometry}
 \\usepackage[utf8]{inputenc}
 \\usepackage{graphicx}
 \\usepackage{layout}
@@ -140,14 +140,6 @@ def ocr(files):
 
 
 def extract(files, instr):
-    # staff_per_page_sum = 0
-    # staff_per_page_cnt = 0
-    # staff_height_sum = 0
-    # page_height_sum = 0
-    # page_cnt = 0
-    # staff_cnt = 0
-    # filename = ''
-
     for path in files:
         filename, _ = os.path.splitext(path)
         print('file:', filename)
@@ -219,41 +211,6 @@ def extract(files, instr):
 
         cv2.imwrite('%s-%s.png' % (filename, instr['slug']), img)
 
-    #     height = bottom_y - top_y
-    #     staff_height_sum += height
-    #     staff_cnt += 1
-    #
-    #     if page_height_sum + height > page_height_limit:
-    #         print(page_height_sum, height, page_height_sum + height)
-    #         page_height_sum = height
-    #         staff_per_page_sum += staff_per_page_cnt
-    #         staff_per_page_cnt = 1
-    #         page_cnt += 1
-    #     else:
-    #         staff_per_page_cnt += 1
-    #         page_height_sum += height
-    #
-    # staff_height = int(staff_height_sum / staff_cnt)
-    #
-    # if page_cnt > 0:
-    #     staff_per_page = int(staff_per_page_sum / page_cnt)
-    # else:
-    #     staff_per_page = staff_per_page_cnt
-    #
-    # missing_staff_cnt = staff_per_page - staff_per_page_cnt
-    # print(staff_per_page, staff_per_page_cnt, page_cnt, staff_height)
-    #
-    # img_empty = np.zeros((staff_height, score_width, 3), np.uint8)
-    # img_empty[:] = white_color
-    #
-    # filename_prefix = ''.join(filename.split('-')[:-1])
-    # os.system('rm %s-9*-%s.png' % (filename_prefix, instr['slug']))
-    #
-    # while missing_staff_cnt > 0:
-    #     cv2.imwrite(
-    #         '%s-9%02d-%s.png' % (filename_prefix, missing_staff_cnt, instr['slug']),
-    #         img_empty)
-    #     missing_staff_cnt -= 1
 
 def run_tex(song, instr):
     files = glob.glob('%s/page-*-%s.png' % (song['dir'], instr['slug']))
@@ -310,10 +267,8 @@ def export(song, instr):
     img_empty[:] = white_color
 
     while missing_staff_cnt > 0:
-        cv2.imwrite('%s/page-9%02d-%s.png' % (song['dir'], missing_staff_cnt, instr['slug']),
-            img_empty)
+        cv2.imwrite('%s/page-9%02d-%s.png' % (song['dir'], missing_staff_cnt, instr['slug']), img_empty)
         missing_staff_cnt -= 1
-
     # Run second pdflatex run
     run_tex(song, instr)
 
@@ -362,5 +317,3 @@ elif action == 'export':
             export(song, instr)
 elif action == 'unpdf':
     unpdf()
-elif action == 'pagelimit':
-    pagelimit()
