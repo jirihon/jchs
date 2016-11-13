@@ -24,27 +24,28 @@ songs = [
     # {'dir': '10_Vse_je_tak_jak_ma_byt_II_Co_na_tom_je_tak_zleho', 'slug': 'CD1_10', 'title': 'Vše je tak, jak má být II - Co na tom je tak zlého'},
     # {'dir': '11_Zavrzen_na_veky_vekuv_Penize_zkropene_krvi', 'slug': 'CD1_11', 'title': 'Zavržen na věky věkův - Peníze zkropené krví'},
     {'dir': '01_posledni_vecere', 'slug': 'CD2_01', 'title': 'Poslední večeře'},
-    # {'dir': '02_v_zahrade_getsemanske', 'slug': 'CD2_02', 'title': 'V zahradě getsemanské'},
-    # {'dir': '03_zajeti', 'slug': 'CD2_03', 'title': 'Zajetí'},
-    # {'dir': '04_petrovo_zapreni', 'slug': 'CD2_04', 'title': 'Petrovo zapření'},
-    # {'dir': '05_kristus_pred_pilatem', 'slug': 'CD2_05', 'title': 'Kristus před Pilátem'},
-    # {'dir': '06_song_krale_heroda', 'slug': 'CD2_06', 'title': 'Song krále Heroda'},
-    # {'dir': '07_vse_psat_od_prvnich_radku', 'slug': 'CD2_07', 'title': 'Vše psát od prvních řádků'},
-    # {'dir': '08_jidasova_smrt', 'slug': 'CD2_08', 'title': 'Jidášova smrt'},
-    # {'dir': '09_pilatuv_soud', 'slug': 'CD2_09', 'title': 'Pilátův soud'},
-    # {'dir': '10_superstar', 'slug': 'CD2_10', 'title': 'Superstar'}
+    {'dir': '02_v_zahrade_getsemanske', 'slug': 'CD2_02', 'title': 'V zahradě getsemanské'},
+    {'dir': '03_zajeti', 'slug': 'CD2_03', 'title': 'Zajetí'},
+    {'dir': '04_petrovo_zapreni', 'slug': 'CD2_04', 'title': 'Petrovo zapření'},
+    {'dir': '05_kristus_pred_pilatem', 'slug': 'CD2_05', 'title': 'Kristus před Pilátem'},
+    {'dir': '06_song_krale_heroda', 'slug': 'CD2_06', 'title': 'Song krále Heroda'},
+    {'dir': '07_vse_psat_od_prvnich_radku', 'slug': 'CD2_07', 'title': 'Vše psát od prvních řádků'},
+    {'dir': '08_jidasova_smrt', 'slug': 'CD2_08', 'title': 'Jidášova smrt'},
+    {'dir': '09_pilatuv_soud', 'slug': 'CD2_09', 'title': 'Pilátův soud'},
+    {'dir': '10_superstar', 'slug': 'CD2_10', 'title': 'Superstar'}
 ]
 
 instruments = [
     {'slug': 'Tbn', 'regex': re.compile('(T|\'I\')(rombone|[bh][nu])')},
-    # {'slug': 'Flt', 'regex': re.compile('(Flute|F[l1LI\]\[\}\{])')},
-    # {'slug': 'ClrBsnTnr', 'regex': re.compile('.*(Clarinet|C[l1LI\]\[\}\{]|Bassoon|Bsn|8311|Tenor|Sx)')},
-    # {'slug': 'Tpt', 'regex': re.compile('.*(Trumpet|Tp[tlL]|[B8].* m.)')},
-    # {'slug': 'KbdStr', 'regex': re.compile('.*(Voice|Choir|Keyboard|K[bh]d)'), 'top': -200, 'bottom_end': -100,
-    #  'exclude': {'regex': re.compile('(.*(Guitar|G[tlL]r|Dr)|^Bass$)'), 'top': -80, 'bottom': +80}}
+    {'slug': 'Flt', 'regex': re.compile('(Flute|F[l1LI\]\[\}\{])')},
+    {'slug': 'ClrBsnTnr', 'regex': re.compile('.*(Clarinet|C[l1LI\]\[\}\{]|Bassoon|Bsn|8311|Tenor|Sx)')},
+    {'slug': 'Tpt', 'regex': re.compile('.*(Trumpet|Tp[tlL]|[B8].* m.)')},
+    {'slug': 'KbdStr', 'regex': re.compile('.*(Voice|Choir|Keyboard|K[bh]d)'), 'top': -200, 'bottom_end': -100,
+     'exclude': {'regex': re.compile('(.*(Guitar|G[tlL1]r|\.th|Dr)|^Bass$)'), 'top': -80, 'bottom': +80}}
     # {'slug': 'BsnTnr', 'regex': re.compile('.*(Bassoon|Bsn|8311|Tenor|Sx)')},
 ]
 score_x_shift = -30
+min_score_x = 100
 label_x_offset = -150
 first_label_extra_x_offset = -100
 label_first_width = 270
@@ -62,7 +63,7 @@ tex_header = '''
 \\usepackage[utf8]{inputenc}
 \\usepackage{graphicx}
 \\usepackage{layout}
-\\usepackage{morefloats}
+\\usepackage[maxfloats=50]{morefloats}
 \\usepackage{fancyhdr}
 \\pagestyle{fancy}
 \\chead{%s}
@@ -122,8 +123,8 @@ def preprocess(files):
         # score_x = img_gray[0:width, 0:600].sum(axis=0).argmin() + score_x_shift
         x_sums = img_gray.sum(axis=0)
         sum_threshold = x_sums.mean() - 3 * x_sums.std()
-        score_x = score_x_shift
-        for x_sum in x_sums:
+        score_x = score_x_shift + min_score_x
+        for x_sum in x_sums[min_score_x:]:
             if x_sum < sum_threshold:
                 break
             score_x += 1
@@ -328,3 +329,7 @@ elif action == 'export':
             export(song, instr)
 elif action == 'unpdf':
     unpdf()
+elif action == 'clear':
+    for song in songs:
+        for instr in instruments:
+            os.system('rm %s/page-*-%s.png' % (song['dir'], instr['slug']))
