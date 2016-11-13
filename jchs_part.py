@@ -11,34 +11,45 @@ import re
 import glob
 
 songs = [
-    {'dir': '01_Predehra', 'slug': '01', 'title': 'Předehra'},
-    {'dir': '02_Jak_ze_sna_procitam', 'slug': '02', 'title': 'Jak ze sna procitám'},
-    {'dir': '03a_Proc_ten_shon', 'slug': '03a', 'title': 'Proč ten shon'},
-    {'dir': '03b_Divna_mystifikace', 'slug': '03b', 'title': 'Divná mystifikace'},
-    {'dir': '04_Vse_je_tak_jak_ma_byt', 'slug': '04', 'title': 'Vše je tak, jak má být'},
-    {'dir': '05_Zemrit_by_mel', 'slug': '05', 'title': 'Zemřít by měl'},
-    {'dir': '06_Hosanna', 'slug': '06', 'title': 'Hosanna'},
-    {'dir': '07_Simon_Zelotes_Ubohy_Jeruzalem', 'slug': '07', 'title': 'Šimon Zélotes - Ubohý Jeruzalém'},
-    {'dir': '08_Pilatuv_sen', 'slug': '08', 'title': 'Pilátův sen'},
-    {'dir': '09_V_chramu', 'slug': '09', 'title': 'V chrámu'},
-    {'dir': '10_Vse_je_tak_jak_ma_byt_II_Co_na_tom_je_tak_zleho', 'slug': '10', 'title': 'Vše je tak, jak má být II - Co na tom je tak zlého'},
-    {'dir': '11_Zavrzen_na_veky_vekuv_Penize_zkropene_krvi', 'slug': '11', 'title': 'Zavržen na věky věkův - Peníze zkropené krví'}
+    # {'dir': '01_Predehra', 'slug': 'CD1_01', 'title': 'Předehra'},
+    # {'dir': '02_Jak_ze_sna_procitam', 'slug': 'CD1_02', 'title': 'Jak ze sna procitám'},
+    # {'dir': '03a_Proc_ten_shon', 'slug': 'CD1_03a', 'title': 'Proč ten shon'},
+    # {'dir': '03b_Divna_mystifikace', 'slug': 'CD1_03b', 'title': 'Divná mystifikace'},
+    # {'dir': '04_Vse_je_tak_jak_ma_byt', 'slug': 'CD1_04', 'title': 'Vše je tak, jak má být'},
+    # {'dir': '05_Zemrit_by_mel', 'slug': 'CD1_05', 'title': 'Zemřít by měl'},
+    # {'dir': '06_Hosanna', 'slug': 'CD1_06', 'title': 'Hosanna'},
+    # {'dir': '07_Simon_Zelotes_Ubohy_Jeruzalem', 'slug': 'CD1_07', 'title': 'Šimon Zélotes - Ubohý Jeruzalém'},
+    # {'dir': '08_Pilatuv_sen', 'slug': 'CD1_08', 'title': 'Pilátův sen'},
+    # {'dir': '09_V_chramu', 'slug': 'CD1_09', 'title': 'V chrámu'},
+    # {'dir': '10_Vse_je_tak_jak_ma_byt_II_Co_na_tom_je_tak_zleho', 'slug': 'CD1_10', 'title': 'Vše je tak, jak má být II - Co na tom je tak zlého'},
+    # {'dir': '11_Zavrzen_na_veky_vekuv_Penize_zkropene_krvi', 'slug': 'CD1_11', 'title': 'Zavržen na věky věkův - Peníze zkropené krví'},
+    {'dir': '01_posledni_vecere', 'slug': 'CD2_01', 'title': 'Poslední večeře'},
+    # {'dir': '02_v_zahrade_getsemanske', 'slug': 'CD2_02', 'title': 'V zahradě getsemanské'},
+    # {'dir': '03_zajeti', 'slug': 'CD2_03', 'title': 'Zajetí'},
+    # {'dir': '04_petrovo_zapreni', 'slug': 'CD2_04', 'title': 'Petrovo zapření'},
+    # {'dir': '05_kristus_pred_pilatem', 'slug': 'CD2_05', 'title': 'Kristus před Pilátem'},
+    # {'dir': '06_song_krale_heroda', 'slug': 'CD2_06', 'title': 'Song krále Heroda'},
+    # {'dir': '07_vse_psat_od_prvnich_radku', 'slug': 'CD2_07', 'title': 'Vše psát od prvních řádků'},
+    # {'dir': '08_jidasova_smrt', 'slug': 'CD2_08', 'title': 'Jidášova smrt'},
+    # {'dir': '09_pilatuv_soud', 'slug': 'CD2_09', 'title': 'Pilátův soud'},
+    # {'dir': '10_superstar', 'slug': 'CD2_10', 'title': 'Superstar'}
 ]
+
 instruments = [
     {'slug': 'Tbn', 'regex': re.compile('(T|\'I\')(rombone|[bh][nu])')},
-    {'slug': 'Flt', 'regex': re.compile('(Flute|F[l1LI\]\[\}\{])')},
-    {'slug': 'Clr', 'regex': re.compile('.*(Clarinet|C[l1LI\]\[\}\{]|Bassoon|Bsn|8311|Tenor|Sx)')},
-    {'slug': 'Tpt', 'regex': re.compile('.*(Trumpet|Tp[tlL]|[B8].* m.)')},
-    # {'slug': 'Bsn', 'regex': re.compile('(Bassoon|Bsn)')},
-    {'slug': 'KbdStr', 'regex': re.compile('.*(Voice|Choir|Keyboard|K[bh]d)'), 'top': -200, 'bottom_end': -100,
-     'exclude': {'regex': re.compile('(.*(Guitar|G[tlL]r|Dr)|^Bass$)'), 'top': -80, 'bottom': +80}}
+    # {'slug': 'Flt', 'regex': re.compile('(Flute|F[l1LI\]\[\}\{])')},
+    # {'slug': 'ClrBsnTnr', 'regex': re.compile('.*(Clarinet|C[l1LI\]\[\}\{]|Bassoon|Bsn|8311|Tenor|Sx)')},
+    # {'slug': 'Tpt', 'regex': re.compile('.*(Trumpet|Tp[tlL]|[B8].* m.)')},
+    # {'slug': 'KbdStr', 'regex': re.compile('.*(Voice|Choir|Keyboard|K[bh]d)'), 'top': -200, 'bottom_end': -100,
+    #  'exclude': {'regex': re.compile('(.*(Guitar|G[tlL]r|Dr)|^Bass$)'), 'top': -80, 'bottom': +80}}
+    # {'slug': 'BsnTnr', 'regex': re.compile('.*(Bassoon|Bsn|8311|Tenor|Sx)')},
 ]
 score_x_shift = -30
 label_x_offset = -150
 first_label_extra_x_offset = -100
 label_first_width = 270
 label_other_width = 170
-page_height_limit = 2580  # 2590
+# page_height_limit = 2590
 score_width = 4250
 top_y_offset = -120
 bottom_y_offset = +100
@@ -89,8 +100,8 @@ def preprocess(files):
 
         min_sum = sys.maxint
         opt_angle = 0
-        angle = -1
-        while angle < 1.1:
+        angle = -1.5
+        while angle < 1.6:
             rot_m = cv2.getRotationMatrix2D((width / 2, height / 2), angle, 1)
             img_gray_r = cv2.warpAffine(
                 img_gray, rot_m, (height, width),
