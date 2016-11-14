@@ -23,23 +23,23 @@ songs = [
     # {'dir': '09_V_chramu', 'slug': 'CD1_09', 'title': 'V chrámu'},
     # {'dir': '10_Vse_je_tak_jak_ma_byt_II_Co_na_tom_je_tak_zleho', 'slug': 'CD1_10', 'title': 'Vše je tak, jak má být II - Co na tom je tak zlého'},
     # {'dir': '11_Zavrzen_na_veky_vekuv_Penize_zkropene_krvi', 'slug': 'CD1_11', 'title': 'Zavržen na věky věkův - Peníze zkropené krví'},
-    {'dir': '01_posledni_vecere', 'slug': 'CD2_01', 'title': 'Poslední večeře'},
-    {'dir': '02_v_zahrade_getsemanske', 'slug': 'CD2_02', 'title': 'V zahradě getsemanské'},
-    {'dir': '03_zajeti', 'slug': 'CD2_03', 'title': 'Zajetí'},
-    {'dir': '04_petrovo_zapreni', 'slug': 'CD2_04', 'title': 'Petrovo zapření'},
-    {'dir': '05_kristus_pred_pilatem', 'slug': 'CD2_05', 'title': 'Kristus před Pilátem'},
-    {'dir': '06_song_krale_heroda', 'slug': 'CD2_06', 'title': 'Song krále Heroda'},
-    {'dir': '07_vse_psat_od_prvnich_radku', 'slug': 'CD2_07', 'title': 'Vše psát od prvních řádků'},
+    # {'dir': '01_posledni_vecere', 'slug': 'CD2_01', 'title': 'Poslední večeře'},
+    # {'dir': '02_v_zahrade_getsemanske', 'slug': 'CD2_02', 'title': 'V zahradě getsemanské'},
+    # {'dir': '03_zajeti', 'slug': 'CD2_03', 'title': 'Zajetí'},
+    # {'dir': '04_petrovo_zapreni', 'slug': 'CD2_04', 'title': 'Petrovo zapření'},
+    # {'dir': '05_kristus_pred_pilatem', 'slug': 'CD2_05', 'title': 'Kristus před Pilátem'},
+    # {'dir': '06_song_krale_heroda', 'slug': 'CD2_06', 'title': 'Song krále Heroda'},
+    # {'dir': '07_vse_psat_od_prvnich_radku', 'slug': 'CD2_07', 'title': 'Vše psát od prvních řádků'},
     {'dir': '08_jidasova_smrt', 'slug': 'CD2_08', 'title': 'Jidášova smrt'},
-    {'dir': '09_pilatuv_soud', 'slug': 'CD2_09', 'title': 'Pilátův soud'},
-    {'dir': '10_superstar', 'slug': 'CD2_10', 'title': 'Superstar'}
+    # {'dir': '09_pilatuv_soud', 'slug': 'CD2_09', 'title': 'Pilátův soud'},
+    # {'dir': '10_superstar', 'slug': 'CD2_10', 'title': 'Superstar'}
 ]
 
 instruments = [
-    {'slug': 'Tbn', 'regex': re.compile('(T|\'I\')(rombone|[bh][nu])')},
-    {'slug': 'Flt', 'regex': re.compile('(Flute|F[l1LI\]\[\}\{])')},
-    {'slug': 'ClrBsnTnr', 'regex': re.compile('.*(Clarinet|C[l1LI\]\[\}\{]|Bassoon|Bsn|8311|Tenor|Sx)')},
-    {'slug': 'Tpt', 'regex': re.compile('.*(Trumpet|Tp[tlL]|[B8].* m.)')},
+    # {'slug': 'Tbn', 'regex': re.compile('.*(T|\'I\')(rombone|[bh][nu])')},
+    # {'slug': 'Flt', 'regex': re.compile('(Flute|F[l1LI\]\[\}\{])'), 'check_count': 2},
+    # {'slug': 'ClrBsnTnr', 'regex': re.compile('.*(Clarinet|C[l1LI\]\[\}\{]|Bassoon|Bsn|8311|Tenor|Sx)')},
+    # {'slug': 'Tpt', 'regex': re.compile('.*(Trumpet|Tp[tlL]|[B8].* m.)')},
     {'slug': 'KbdStr', 'regex': re.compile('.*(Voice|Choir|Keyboard|K[bh]d)'), 'top': -200, 'bottom_end': -100,
      'exclude': {'regex': re.compile('(.*(Guitar|G[tlL1]r|\.th|Dr)|^Bass$)'), 'top': -80, 'bottom': +80}}
     # {'slug': 'BsnTnr', 'regex': re.compile('.*(Bassoon|Bsn|8311|Tenor|Sx)')},
@@ -184,6 +184,10 @@ def extract(files, instr):
                 if excl_top_y == 0:
                     excl_top_y = int(coords[2])
                 excl_bottom_y = int(coords[4])
+
+        if 'check_count' in instr:
+            if label_x_cnt != instr['check_count']:
+                raise Exception('Invalid staff count.')
 
         label_x = int(label_x_sum / label_x_cnt)
 
